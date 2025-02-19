@@ -1,14 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&display=swap');
 @import "tailwindcss";
 
-*{
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+
+@theme {
+  --font-atkin: "Atkinson Hyperlegible Mono", light, medium, bold, serif;
+  --font-robeto: "roboto", serif;
 }
-body {
-  background-image: linear-gradient(
-    45deg,
-    hsl(155, 83%, 55%) 0%
-    hsl(59, 90%, 72%) 100%
-  );
+
+:root {
+  font-family: "roboto", sans-serif;
+  color-scheme: dark;
 }

@@ -1,31 +1,43 @@
-import React from 'react'
+import {Menu , X} from "lucide-react"
+import React, { useState } from 'react'
+import logo from '../assets/logo.png'
+import {navItems} from "../componets/navItems"
 
 const navbar = () => {
-  return (
-    <>
-
-        <nav className='mb-2 shadow px-4'>
-            <div className='relative max-w-screen-lg mx-auto py-4 flex sm:items-center sm:justify-between'>
-                <a className='text-2x1 flex items-center font-black' href="index.html">
-                    <span>Elevra</span>
-                </a>
-                <input className='peer-hidden' type='checkbox' id="navbar-open"></input>
-                <label className='cursor-pointer aboslute right-0 mt-1 text-xl' for="navbar-open">
-                    <svg></svg>
-                </label>
-                <nav className='peer-checked:block hidden' mt-4 sm:mt-0>
-                    <ul className='flex flex-col sm:gap-x-8'>
-                        <li><a className='hover:text-zinc-100' href="#">Home</a></li>
-                        <li><a className='hover:text-zinc-100'href="#">Habits</a></li>
-                        <li><a className='hover:text-zinc-100'href="#">Leaderboard</a></li>
-                        <li><a className='hover:text-zinc-100'href="#">Profile</a></li>
-                        <li><a className="hover:bg-zinc-100 hover:text-zinc-950 px-6 py-2 rounded-xl  bg-zinc-950 font-medium text-zinc-100"href='#'>Login</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </nav>
+    const{isOpen, setIsOpen} = useState(false);
+    
+    const toggleNavbar = () => {
+      setIsOpen(!isOpen);
+    };
     
 
+
+  return (
+    <>
+       <nav className="sticky top-0 z-50 py-3 backdrop-blur-lg border-b border-neutral-700/80">
+            <div className="container px-4 mx-auto relative text-sm">
+                <div className="flex justify-between item-center">
+                    <div className="flex items-center flex-shrink-0">
+                        <img className='h-10 w-10 mr-2' src={logo} alt="Elevra" />
+                        <span className="text-xl tracking-tight">Elevra</span>
+                    </div>
+                    <ul className="hidden lg:flex ml-14 space-x-12">
+                        {navItems.map((items, index) => (
+                            <li key={index}>
+                                <a href={items.href}>{items.label}</a>
+                            </li>
+
+                        )
+                    )}  
+                    </ul>
+                    <div className="lg:hidden md:flex flex-col justify-end">
+                        <button onClick={toggleNavbar}>
+                            {isOpen ? <X/> : <Menu/> }
+                        </button>
+                    </div>
+                </div>
+            </div>
+       </nav> 
     </>
   )
 }
