@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Hero = () => {
+export const Hero = () => {
   return (
     <>
         <section className="">
@@ -11,5 +11,3 @@ const Hero = () => {
     </>
   )
 }
-
-export default Hero

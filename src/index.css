@@ -2,13 +2,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&display=swap');
 @import "tailwindcss";
 
+:root {
+  font-family: "roboto", sans-serif;
+  color-scheme: dark;
+}
 
 @theme {
   --font-atkin: "Atkinson Hyperlegible Mono", light, medium, bold, serif;
   --font-robeto: "roboto", serif;
-}
-
-:root {
-  font-family: "roboto", sans-serif;
-  color-scheme: dark;
 }
