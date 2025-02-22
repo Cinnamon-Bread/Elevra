@@ -1,9 +1,8 @@
 import React from 'react'
 
-const Habits = () => {
+export const Habits = () => {
   return (
     <div>Habits</div>
   )
 }
 
-export default Habits

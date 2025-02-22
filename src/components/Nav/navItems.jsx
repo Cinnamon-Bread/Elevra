@@ -1,4 +1,6 @@
 import React from 'react'
+
+
 const navItems = [
     { label: "Home", href: "/"},
     { label: "Habits", href: "habits"},

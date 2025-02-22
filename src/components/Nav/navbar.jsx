@@ -1,7 +1,8 @@
 import {Menu , X} from "lucide-react"
 import React, { useState } from 'react'
 import logo from '../../assets/logo.png'
-import navItems from "../Nav/navItems"
+import navItems from "./navItems"
+import {Link} from 'react-router-dom'
 
 const navbar = () => {
     const[isOpen, setIsOpen] = useState(false);
@@ -18,15 +19,15 @@ const navbar = () => {
             <div className="container px-4 m-auto relative text-sm">
                 <div className="flex justify-between item-center">
                     <div className="flex items-center flex-shrink-0">
-                        <a className = "flex" href="/">
+                        <Link className = "flex" to="/">
                             <img className='h-10 w-10 mr-2' src={logo} alt="Elevra" />
                             <span className="p-1 text-xl tracking-tight">Elevra</span>
-                        </a>       
+                        </Link>       
                     </div>
                     <ul className="hidden p-3 lg:flex ml-14 space-x-12">
                         {navItems.map((items, index) => (
                             <li key={index}>
-                                <a href={items.href}>{items.label}</a>
+                                <Link to={items.href}>{items.label}</Link>
                             </li>
 
                         )
@@ -43,7 +44,7 @@ const navbar = () => {
                         <ul>
                             {navItems.map((items, index) => (
                                 <li key={index} className="py-4">
-                                <a href={items.href}>{items.label}</a>
+                                <Link to={items.href}>{items.label}</Link>
                                 </li>
                                 )
                             )}
