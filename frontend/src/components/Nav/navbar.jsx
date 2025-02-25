@@ -43,7 +43,7 @@ const navbar = () => {
                     <div className="fixed text-center right-0 z-20 bg-neutral-900 w-full p-12 flex flex-col justify-center item-center lg:hidden">
                         <ul>
                             {navItems.map((items, index) => (
-                                <li key={index} className="py-4">
+                                <li key={index} className="font-atkin hover:text-amber-300 py-4">
                                 <Link to={items.href}>{items.label}</Link>
                                 </li>
                                 )
