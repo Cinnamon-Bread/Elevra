@@ -12,19 +12,21 @@ import { Leaderboards } from './components/Leaderboards/Leaderboards'
 const App = () => {
   return (
     <>
-      <Router>
-        <Navbar/>
-          <Routes>
-            <Route path='/' element= {<Home/>}/>
-            <Route path='/Habits' element= {<Habits/>}/>
-            <Route path='/Habit' element= {<Habits/>}/>
-            <Route path='/Profile' element={<Profile/>}/>
-            <Route path='/Rewards' element={<Rewards/>}/>
-            <Route path='/Leaderboard'element={<Leaderboards/>}/>
-          </Routes>
-        <div className='max-w-7xl mx-auto pt-20 px-6'>
-        </div>
-      </Router>
+      <div className='w-full h-full'>
+        <Router>
+          <Navbar/>
+            <Routes>
+              <Route path='/' element= {<Home/>}/>
+              <Route path='/Habits' element= {<Habits/>}/>
+              <Route path='/Habit' element= {<Habits/>}/>
+              <Route path='/Profile' element={<Profile/>}/>
+              <Route path='/Rewards' element={<Rewards/>}/>
+              <Route path='/Leaderboard'element={<Leaderboards/>}/>
+            </Routes>
+          <div className='max-w-7xl mx-auto pt-20 px-6'>
+          </div>
+        </Router>
+      </div>
     </>
   )
 }
