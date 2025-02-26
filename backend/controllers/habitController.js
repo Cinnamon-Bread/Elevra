@@ -31,6 +31,22 @@ const getHabit = async (req, res) => {
 const createHabit = async(req, res) =>{
     const {title, quantity, xp} = req.body
 
+    let emptyFields = []
+
+    if(!title){
+        emptyFields.push('title')
+    }
+    if(!quantity) {
+        emptyFields.push('quantity')
+    }
+    if(!xp){
+        emptyFields.push('xp')
+    }
+    if(emptyFields.length > 0){
+        return res.stais(400).json({error: 'Please fill in all fields', emptyFields})
+    }
+
+
     try{
         const habit =  await Habit.create({title, quantity, xp})
         res.status(200).json(habit)
