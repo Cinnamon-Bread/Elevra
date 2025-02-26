@@ -1,4 +1,4 @@
-import { habitContext } from "../context/habitcontext";
+import { HabitContext } from "../context/habitcontext";
 import { useContext } from "react";
 
 export const useHabitContext = () => {

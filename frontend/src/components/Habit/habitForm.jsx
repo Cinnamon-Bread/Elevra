@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
+import { useHabitContext } from '../../Hooks/useHabitsContext'
 
 export const HabitForm = () => {
+  
+  const {dispatch} = useHabitContext()
   const [title, setTitle] = useState('')
   const [quantity, setQuantity] = useState('')
   const [xp, setXp] = useState('')
   const [error, setError] = useState('')
+  const [emptyFields, setEmptyFields] = useState([])
 
   const handleSubmit = async (h) => {
     h.preventDefault()
@@ -22,6 +26,7 @@ export const HabitForm = () => {
 
     if(!response.ok){
         setError(json.error)
+        setEmptyFields(json.emptyFields)
     }
 
     if(response.ok) {
@@ -29,7 +34,9 @@ export const HabitForm = () => {
         setQuantity('')
         setXp('')
         setError(null)
+        setEmptyFields([])
         console.log('new Habit added', json)
+        dispatch({type: 'CREATE_HABIT', payload: json})
     }
   } 
   
@@ -41,6 +48,7 @@ export const HabitForm = () => {
                 type='text'
                 onChange={(h) => setTitle(h.target.value)}
                 value={title}
+                class={emptyFields.includes('title') ? 'error' : ''}
                 ></input>
 
             <label>Quantity</label>
@@ -48,6 +56,7 @@ export const HabitForm = () => {
                 type='number'
                 onChange={(h) => setQuantity(h.target.value)}
                 value={quantity}
+                class={emptyFields.includes('quantity') ? 'error' : ''}
                 ></input>
 
 
@@ -56,6 +65,7 @@ export const HabitForm = () => {
                 type='number'
                 onChange={(h) => setXp(h.target.value)}
                 value={xp}
+                class={emptyFields.includes('xp') ? 'error' : ''}
                 ></input>
 
             <button>Add Habit</button>
