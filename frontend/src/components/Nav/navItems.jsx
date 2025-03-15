@@ -7,6 +7,7 @@ const navItems = [
     { label: "Profile", href: "profile"},
     { label: "Rewards", href: "rewards"},
     { label: "Leaderboard", href: "leaderboard"},
+    {}
 
 ];
 

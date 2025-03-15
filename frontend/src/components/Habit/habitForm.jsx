@@ -48,7 +48,7 @@ export const HabitForm = () => {
                 type='text'
                 onChange={(h) => setTitle(h.target.value)}
                 value={title}
-                class={emptyFields.includes('title') ? 'error' : ''}
+                className={emptyFields.includes('title') ? 'error' : ''}
                 ></input>
 
             <label>Quantity</label>
@@ -56,7 +56,7 @@ export const HabitForm = () => {
                 type='number'
                 onChange={(h) => setQuantity(h.target.value)}
                 value={quantity}
-                class={emptyFields.includes('quantity') ? 'error' : ''}
+                className={emptyFields.includes('quantity') ? 'error' : ''}
                 ></input>
 
 
@@ -65,7 +65,7 @@ export const HabitForm = () => {
                 type='number'
                 onChange={(h) => setXp(h.target.value)}
                 value={xp}
-                class={emptyFields.includes('xp') ? 'error' : ''}
+                className={emptyFields.includes('xp') ? 'error' : ''}
                 ></input>
 
             <button>Add Habit</button>

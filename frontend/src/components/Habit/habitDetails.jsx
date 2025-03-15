@@ -1,6 +1,7 @@
 import { useHabitContext } from '../../Hooks/useHabitsContext'
 import React from 'react'
 
+import {formatDistanceToNow} from 'date-fns/formatDistanceToNow'
 
 
 export const HabitDetails = ({ habit }) => {
@@ -24,7 +25,7 @@ export const HabitDetails = ({ habit }) => {
         <h4>{habit.title}</h4>
         <p><strong>Quantity: </strong> {habit.quantity}</p>
         <p><strong>XP: </strong> {habit.xp}</p>
-        <p>{ habit.createdAt} </p>
+        <p>{formatDistanceToNow(new Date(habit.createdAt), {addSuffix: true})} </p>
         <span onClick={handleClick}>delete</span>
     </div>
   )

@@ -3,6 +3,10 @@ import React, { useState } from 'react'
 import logo from '../../assets/logo.png'
 import navItems from "./navItems"
 import {Link} from 'react-router-dom'
+import useLogout from '../../Hooks/useLogout'
+import useAuthContext from "../../Hooks/useAuthContext"
+
+
 
 const navbar = () => {
     const[isOpen, setIsOpen] = useState(false);
@@ -10,7 +14,14 @@ const navbar = () => {
     const toggleNavbar = () => {
       setIsOpen(!isOpen);
     };
+
+    const {logout} = useLogout()
+
+    const handleClick = () => {
+        logout()
+    }
     
+    const {user} = useAuthContext()
 
 
     return (
@@ -29,9 +40,19 @@ const navbar = () => {
                             <li className = "font-atkin hover:text-amber-300" key={index}>
                                 <Link to={items.href}>{items.label}</Link>
                             </li>
-
-                        )
-                    )}  
+                        ))}
+                        {!user && (
+                                <div>
+                                    <Link to="/login">Login</Link>
+                                    <Link to="/login">Signup</Link>
+                                </div>
+                        )}
+                        {user && (
+                                <div>
+                                    <span>{user.email}</span>
+                                    <button className="font-atkin hover:text-amber-300 py-4" onClick={handleClick}>Log out</button>
+                                </div>
+                                )}
                     </ul>
                     <div className="lg:hidden md:flex flex-col justify-end">
                         <button onClick={toggleNavbar}>
@@ -44,10 +65,23 @@ const navbar = () => {
                         <ul>
                             {navItems.map((items, index) => (
                                 <li key={index} className="font-atkin hover:text-amber-300 py-4">
-                                <Link to={items.href}>{items.label}</Link>
+                                    <Link to={items.href}>{items.label}</Link>
                                 </li>
                                 )
+                            )}{!user && (
+                                <div>
+                                    <Link to="/login">Login</Link>
+                                    <Link to="/login">Signup</Link>
+                                </div>
                             )}
+                            
+                            {user && (
+                                <div>
+                                    <span>{user.email}</span>
+                                    <button className="font-atkin hover:text-amber-300 py-4" onClick={handleClick}>Log out</button>
+                                </div>
+                                )}
+                            
                         </ul> 
                     </div>
                 )}
