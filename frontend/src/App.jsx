@@ -2,29 +2,32 @@ import React from 'react'
 import {Hero} from './components/Landing/Hero'
 import Navbar from './components/Nav/navbar'
 import {Home} from './components/Home/Home'
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route ,Navigate} from 'react-router-dom'
 import { Habits } from './components/Habit/Habits'
 import { Profile } from './components/Profile/Profile'
 import { Rewards } from './components/Rewards/Rewards'
 import { Leaderboards } from './components/Leaderboards/Leaderboards'
 import Login from './components/Auth/login'
 import Signup from './components/Auth/signup'
+import useAuthContext from './Hooks/useAuthContext'
 
 const App = () => {
+  const{user} = useAuthContext()
+
   return (
     <>
       <div className='w-full h-full'>
         <Router>
           <Navbar/>
             <Routes>
-              <Route path='/' element= {<Home/>}/>
-              <Route path='/Habits' element= {<Habits/>}/>
-              <Route path='/Habit' element= {<Habits/>}/>
-              <Route path='/Profile' element={<Profile/>}/>
-              <Route path='/Rewards' element={<Rewards/>}/>
-              <Route path='/Leaderboard'element={<Leaderboards/>}/>
-              <Route path='/Login'element={<Login/>}/>
-              <Route path='/Signup'element={<Signup/>}/>
+              <Route path='/' element= {user ? <Home/> : <Navigate to= "/Login"/>}/>
+              <Route path='/Habits' element= {user ? <Habits/> : <Navigate to= "/Login"/>}/>
+              <Route path='/Habit' element= {user ? <Habits/> : <Navigate to= "/Login"/>}/>
+              <Route path='/Profile' element={user ? <Profile/> : <Navigate to= "/Login"/>}/>
+              <Route path='/Rewards' element={user ? <Rewards/> : <Navigate to= "/Login"/>}/>
+              <Route path='/Leaderboard'element={user ? <Leaderboards/> : <Navigate to= "/Login"/>}/>
+              <Route path='/Login'element={!user ? <Login/> : <Navigate to= "/"/>}/>
+              <Route path='/Signup'element={!user ? <Signup/> : <Navigate to= "/"/>}/>
             </Routes>
           <div className='max-w-7xl mx-auto pt-20 px-6'>
           </div>

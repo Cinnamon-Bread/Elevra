@@ -1,17 +1,25 @@
 import React, { useState } from 'react'
 import { useHabitContext } from '../../Hooks/useHabitsContext'
+import useAuthContext from '../../Hooks/useAuthContext'
 
 export const HabitForm = () => {
   
   const {dispatch} = useHabitContext()
+  const {user} = useAuthContext()
   const [title, setTitle] = useState('')
   const [quantity, setQuantity] = useState('')
   const [xp, setXp] = useState('')
   const [error, setError] = useState('')
   const [emptyFields, setEmptyFields] = useState([])
 
+
   const handleSubmit = async (h) => {
     h.preventDefault()
+
+    if (!user) {
+        setError('Must be logged in')
+        return
+    }
 
     const habit = {title, quantity, xp}
 
@@ -19,7 +27,8 @@ export const HabitForm = () => {
         method: 'POST',
         body: JSON.stringify(habit),
         headers: {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            'Authorization' : `Bearer ${user.token}`
         }
     })
     const json = await response.json()
