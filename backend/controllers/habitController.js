@@ -4,7 +4,9 @@ const mongoose = require('mongoose')
 
 //get all workouts
 const getHabits = async(req, res) => {
-    const habits = await Habit.find({}).sort({createdAt: -1})
+    const user_id = req.user_id
+    const habits = await Habit.find({ user_id }).sort({createdAt: -1})
+
 
     res.status(200).json(habits)
 }
@@ -48,7 +50,8 @@ const createHabit = async(req, res) =>{
 
 
     try{
-        const habit =  await Habit.create({title, quantity, xp})
+        const user_id = req.user_id
+        const habit =  await Habit.create({title, quantity, xp, user_id})
         res.status(200).json(habit)
     }catch(error){
         res.status(400).json({error: error.message})

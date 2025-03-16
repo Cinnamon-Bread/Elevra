@@ -7,6 +7,9 @@ const {
     getHabit,
     deleteHabit,
     updateHabit} = require('../controllers/habitController')
+const requireAuth = require('../middleware/requireAuth')
+//require auth
+router.use(requireAuth)
 
 router.get('/', getHabits)
 
