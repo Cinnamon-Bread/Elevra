@@ -51,34 +51,45 @@ export const HabitForm = () => {
   
     return (
         <form onSubmit={handleSubmit}>
-            <h3>Add a New Habit</h3>
-            <label>Habit Title</label>
-            <input
-                type='text'
-                onChange={(h) => setTitle(h.target.value)}
-                value={title}
-                className={emptyFields.includes('title') ? 'error' : ''}
-                ></input>
+            <div className='flex flex-auto'>
+                <div className='block'>
+                    <h3>Add a New Habit</h3>
+                    <label>Habit Title</label>
+                    <div className='p-10 mt-10 mb-20 w-full border-zinc-300 border-1 box-border'>
+                        <input
+                            type='text'
+                            onChange={(h) => setTitle(h.target.value)}
+                            value={title}
+                            className={emptyFields.includes('title') ? 'error' : ''}
+                            ></input>
+                    </div>
+                    <label>Quantity</label>
+                    <div className='p-10 mt-10 mb-20 w-full border-zinc-300 border-1 box-border'>
+                        <input
+                            type='number'
+                            onChange={(h) => setQuantity(h.target.value)}
+                            value={quantity}
+                            className={emptyFields.includes('quantity') ? 'error' : ''}
+                            ></input>
+                    </div>
 
-            <label>Quantity</label>
-            <input
-                type='number'
-                onChange={(h) => setQuantity(h.target.value)}
-                value={quantity}
-                className={emptyFields.includes('quantity') ? 'error' : ''}
-                ></input>
 
+                    <label>Amount of Xp</label>
+                    <div className='p-10 mt-10 mb-20 w-full border-zinc-300 rounded-sm box-border'>
+                        <input
+                            type='number'
+                            onChange={(h) => setXp(h.target.value)}
+                            value={xp}
+                            className={emptyFields.includes('xp') ? 'error' : ''}
+                            ></input> 
+                    </div>
 
-            <label>Amount of Xp</label>
-            <input
-                type='number'
-                onChange={(h) => setXp(h.target.value)}
-                value={xp}
-                className={emptyFields.includes('xp') ? 'error' : ''}
-                ></input>
-
-            <button>Add Habit</button>
-            {error && <div>{error}</div>}
+                    <button className='bg-emerald-300 border-0 text-zinc-100 p-10 font-atkin rounded-sm cursor-pointer'
+                    >Add Habit
+                    </button>
+                    {error && <div className='p-10 bg-red-400 rounded-sm border-1 text-zinc-100 m-20'>{error}</div>}
+                </div>
+            </div>
         </form>
     )
 }

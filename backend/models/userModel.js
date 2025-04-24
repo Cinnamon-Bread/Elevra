@@ -13,8 +13,28 @@ const userSchema = new Schema({
     password:{
         type: String,
         required: true
+    },
+    profilePic: {
+        type: String,
+        default: "",
+    },
+    elo: {
+        type: Number,
+        default : 0
+    },
+    level: {
+        type: Number,
+        default: 1
+    },
+    xp: {
+        type: Number,
+        default: 0
     }
-})
+
+},
+{ timestamps: true }
+
+)
 
 // static signup method
 userSchema.statics.signup = async function(email, password) {

@@ -42,9 +42,9 @@ const navbar = () => {
                             </li>
                         ))}
                         {!user && (
-                                <div>
+                                <div className="hidden p-3 lg:flex ml-14 space-x-12 font-atkin hover:text-amber-300">
                                     <Link to="/login">Login</Link>
-                                    <Link to="/login">Signup</Link>
+                                    <Link to="/signup">Signup</Link>
                                 </div>
                         )}
                         {user && (
@@ -69,9 +69,9 @@ const navbar = () => {
                                 </li>
                                 )
                             )}{!user && (
-                                <div>
+                                <div className="font-atkin hover:text-amber-300">
                                     <Link to="/login">Login</Link>
-                                    <Link to="/login">Signup</Link>
+                                    <Link to="/signup">Signup</Link>
                                 </div>
                             )}
                             

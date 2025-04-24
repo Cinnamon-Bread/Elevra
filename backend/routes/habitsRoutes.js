@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Habit = require('../models/habitsModel')
 const {
+    completeHabit,
     createHabit,
     getHabits,
     getHabit,
@@ -20,6 +21,8 @@ router.post('/', createHabit)
 router.delete('/:id', deleteHabit)
 
 router.patch('/:id', updateHabit)
+
+router.post('/complete/:habitId', completeHabit)
 
 
 
