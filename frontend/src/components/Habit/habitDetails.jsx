@@ -28,20 +28,26 @@ export const HabitDetails = ({ habit }) => {
     }
   }
 
-  const handleComplete = async (id) => {
+  const handleComplete = async () => {
+    if (!user) return
+  
     try {
-      const res = await fetch(`/api/habits/` + habit._id, {
+      const response = await fetch('/api/habits/complete/' + habit._id, {
         method: 'POST',
-        headers: { 
-          'Authorization' : `Bearer ${user.token}` }
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
       })
   
-      const data = await res.json()
-      if (res.ok) {
-        alert(`Habit Completed! XP: ${data.xp}, Level: ${data.level}`)
+      const json = await response.json()
+  
+      if (response.ok) {
+        dispatch({ type: 'UPDATE_USER_XP', payload: {xp: json.xp, level: json.level} })
+        alert(`Habit Completed! XP: ${json.xp}, Level: ${json.level}`)
       } else {
-        alert(data.error)
+        alert(json.error)
       }
+  
     } catch (err) {
       console.error(err)
       alert('Failed to complete habit')
@@ -49,13 +55,27 @@ export const HabitDetails = ({ habit }) => {
   }
 
   return (
-    <div className='p-10 bg-zinc-300 m-20 shadow-2xl'>
-        <h4>{habit.title}</h4>
-        <p><strong>Quantity: </strong> {habit.quantity}</p>
-        <p><strong>XP: </strong> {habit.xp}</p>
-        <p>{formatDistanceToNow(new Date(habit.createdAt), {addSuffix: true})} </p>
-        <span onClick={handleDelete}>Delete</span>
-        <button  onClick={handleComplete} className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Complete</button>
+    <div className="p-6 bg-zinc-800 shadow-lg rounded-lg border border-zinc-700 space-y-2">
+      <h4 className="text-xl font-semibold text-white">{habit.title}</h4>
+      <p className="text-zinc-50"><strong>Quantity:</strong> {habit.quantity}</p>
+      <p className="text-zinc-50"><strong>XP:</strong> {habit.xp}</p>
+      <p className="text-sm text-zinc-400 italic">
+        {formatDistanceToNow(new Date(habit.createdAt), { addSuffix: true })}
+      </p>
+      <div className="flex justify-between items-center pt-4">
+        <button
+          onClick={handleComplete}
+          className="bg-emerald-500 text-white px-3 py-1 rounded hover:bg-emerald-600 transition"
+        >
+          Complete
+        </button>
+        <button
+          onClick={handleDelete}
+          className="text-red-500 hover:underline"
+        >
+          Delete
+        </button>
+      </div>
     </div>
   )
 }

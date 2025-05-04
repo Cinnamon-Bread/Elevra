@@ -1,5 +1,7 @@
 import {useState} from 'react'
 import  useAuthContext  from "../Hooks/useAuthContext";
+import  {jwtDecode} from "jwt-decode";
+
 
 export const useLogin = () => {
     const [error, setError] = useState(null)
@@ -23,9 +25,15 @@ export const useLogin = () => {
             setError(json.error)
         }
         if (response.ok) {
-            localStorage.setItem('user', JSON.stringify(json))
+            const decoded = jwtDecode(json.token);
 
-            dispatch({type: 'LOGIN', payload: json})
+                const user = {
+                ...decoded,        // includes _id, email, level, xp, etc.
+                token: json.token,
+            };
+            localStorage.setItem('user', JSON.stringify(user))
+
+            dispatch({type: 'LOGIN', payload: user})
 
             setIsLoading(false)
         }

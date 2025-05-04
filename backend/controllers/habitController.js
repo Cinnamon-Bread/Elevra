@@ -3,7 +3,13 @@ const Habit = require('../models/habitsModel')
 const mongoose = require('mongoose')
 const User = require('../models/userModel')
 
-//get all workouts
+const difficultyMap = {
+    easy: 25,
+    medium: 50,
+    hard: 100
+  }
+
+//get all habits
 const getHabits = async(req, res) => {
     const user_id = req.user._id
     const habits = await Habit.find({ user_id }).sort({createdAt: -1})
@@ -12,7 +18,7 @@ const getHabits = async(req, res) => {
     res.status(200).json(habits)
 }
 
-//get a single workout
+//get a single habit
 const getHabit = async (req, res) => {
     const { id } = req.params
 
@@ -29,10 +35,22 @@ const getHabit = async (req, res) => {
     res.status(200).json(habit)
 }
 
+const getCompletedHabits = async (req, res) => {
+    const userId = req.params.userId
+  
+    try {
+      const habits = await Habit.find({ user_id: userId, completed: true }).sort({ createdAt: -1 })
+      res.status(200).json(habits)
+    } catch (err) {
+      res.status(500).json({ error: err.message })
+    }
+  }
+  
 
-//create a workout
+
+//create a habit
 const createHabit = async(req, res) =>{
-    const {title, quantity, xp} = req.body
+    const {title, quantity, difficulty} = req.body
 
     let emptyFields = []
 
@@ -42,17 +60,19 @@ const createHabit = async(req, res) =>{
     if(!quantity) {
         emptyFields.push('quantity')
     }
-    if(!xp){
-        emptyFields.push('xp')
+    if (!difficulty || !difficultyMap[difficulty]) {
+        emptyFields.push('difficulty')
     }
     if(emptyFields.length > 0){
         return res.status(400).json({error: 'Please fill in all fields', emptyFields})
     }
-
+    const xp = difficultyMap[difficulty]
+      
 
     try{
         const user_id = req.user._id
-        const habit =  await Habit.create({title, quantity, xp, user_id})
+        
+        const habit =  await Habit.create({title, quantity, difficulty ,xp, user_id})
         res.status(200).json(habit)
     }catch(error){
         res.status(400).json({error: error.message})
@@ -100,7 +120,7 @@ const xpForNextLevel = (level) => 100 * level
 
 const completeHabit = async (req, res) => {
     try {
-        const { habitId } = req.params
+        const  habitId  = req.params.id
         const userId = req.user._id
 
         const habit = await Habit.findById(habitId)
@@ -109,7 +129,11 @@ const completeHabit = async (req, res) => {
         }
 
         const user = await User.findById(userId)
-        if (!user) return res.status(404).json({ error: 'User not found' })
+        if (!user) 
+            return res.status(404).json({ error: 'User not found' })
+
+        habit.completed = true;
+        await habit.save();
 
         // Add XP from the habit
         user.xp += habit.xp
@@ -123,6 +147,7 @@ const completeHabit = async (req, res) => {
 
         await user.save()
         res.status(200).json({ message: 'Habit completed', level: user.level, xp: user.xp })
+        
 
     } catch (err) {
         res.status(500).json({ error: err.message })
@@ -130,6 +155,7 @@ const completeHabit = async (req, res) => {
 }
 
 module.exports = {
+    getCompletedHabits,
     completeHabit,
     createHabit,
     getHabits,

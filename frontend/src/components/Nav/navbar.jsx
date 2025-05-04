@@ -49,6 +49,7 @@ const navbar = () => {
                         )}
                         {user && (
                                 <div>
+                                    <p>Level {user.level} — {user.xp} XP</p>
                                     <span>{user.email}</span>
                                     <button className="font-atkin hover:text-amber-300 py-4" onClick={handleClick}>Log out</button>
                                 </div>
@@ -77,6 +78,7 @@ const navbar = () => {
                             
                             {user && (
                                 <div>
+                                    <p>Level {user.level} — {user.xp} XP</p>
                                     <span>{user.email}</span>
                                     <button className="font-atkin hover:text-amber-300 py-4" onClick={handleClick}>Log out</button>
                                 </div>

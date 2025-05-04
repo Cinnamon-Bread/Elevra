@@ -18,6 +18,10 @@ export const habitsReducer = (state, action) => {
             return{
                 habits: state.habits.filter((w) => w._id !== action.payload._id)
             }
+        case 'COMPLETE_HABIT':
+            return{
+                habits: state.habits.filter((w) => w._id !== action.payload._id)
+            }
         default:
             return state
     }

@@ -13,9 +13,19 @@ const habitSchema = new Schema({
     },
     xp: {
         type: Number,
-        required: true
+        required: true,
+        min: 1,
+        max: 500
     },
-    
+    difficulty: {
+        type: String,
+        enum: ['easy', 'medium', 'hard'],
+        required: true
+      },
+    completed: { 
+        type: Boolean, 
+        default: false 
+    },
     user_id: {
         type: String,
         required: true

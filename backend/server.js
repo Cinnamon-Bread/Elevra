@@ -3,6 +3,7 @@ const express = require('express')
 const HabitRoutes = require('./routes/habitsRoutes')
 const mongoose = require('mongoose')
 const userRoutes = require('./routes/user')
+const genRoutes = require('./routes/genroutes')
 // express app
 const app = express()
 
@@ -19,6 +20,10 @@ app.use((req , res, next) =>{
 // routes
 app.use('/api/habits',HabitRoutes)
 app.use('/api/user', userRoutes)
+app.use('/api/', genRoutes )
+app.use('/api/', genRoutes)  
+app.use('/uploads', express.static('uploads'));
+
 
 //connet ot db
 mongoose.connect(process.env.MONG_URI)
