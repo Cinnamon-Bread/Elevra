@@ -1,0 +1,36 @@
+const mongoose = require('mongoose')
+
+const Schema = mongoose.Schema
+
+const habitSchema = new Schema({
+    title: {
+        type : String,
+        required : true
+    },
+    quantity: {
+        type:Number,
+        required : true
+    },
+    xp: {
+        type: Number,
+        required: true,
+        min: 1,
+        max: 500
+    },
+    difficulty: {
+        type: String,
+        enum: ['easy', 'medium', 'hard'],
+        required: true
+      },
+    completed: { 
+        type: Boolean, 
+        default: false 
+    },
+    user_id: {
+        type: String,
+        required: true
+    }
+}, {timestamps: true})
+
+module.exports = mongoose.model('habit', habitSchema)
+
