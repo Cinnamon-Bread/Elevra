@@ -2,6 +2,17 @@ const express = require('express')
 const Habit = require('../models/habitsModel')
 const mongoose = require('mongoose')
 const User = require('../models/userModel')
+const jwt = require('jsonwebtoken')
+
+const createToken = (user) => {
+    return jwt.sign({
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+        level: user.level,
+        xp: user.xp,}, 
+        process.env.SECRET,{expiresIn: '3d'} )
+}
 
 const difficultyMap = {
     easy: 25,
@@ -145,8 +156,16 @@ const completeHabit = async (req, res) => {
             // 🎉 TODO: trigger reward system here
         }
 
+        const token = createToken(user)
+
         await user.save()
-        res.status(200).json({ message: 'Habit completed', level: user.level, xp: user.xp })
+        res.status(200).json({
+            user: {
+              xp: user.xp,
+              level: user.level
+            },
+            token
+          })
         
 
     } catch (err) {

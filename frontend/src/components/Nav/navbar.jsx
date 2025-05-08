@@ -32,12 +32,12 @@ const navbar = () => {
                     <div className="flex items-center flex-shrink-0">
                         <Link className = "flex" to="/">
                             <img className='h-10 w-10 mr-2' src={logo} alt="Elevra" />
-                            <span className="p-1 text-xl tracking-tight">Elevra</span>
+                            <span className="p-1 text-xl font-bold tracking-wide text-white">Elevra</span>
                         </Link>       
                     </div>
                     <ul className="hidden p-3 lg:flex ml-14 space-x-12">
                         {navItems.map((items, index) => (
-                            <li className = "font-atkin hover:text-amber-300" key={index}>
+                            <li className = "font-atkin text-gray-200 hover:text-amber-400 transition-colors duration-200" key={index}>
                                 <Link to={items.href}>{items.label}</Link>
                             </li>
                         ))}
@@ -48,12 +48,17 @@ const navbar = () => {
                                 </div>
                         )}
                         {user && (
-                                <div>
-                                    <p>Level {user.level} — {user.xp} XP</p>
-                                    <span>{user.email}</span>
-                                    <button className="font-atkin hover:text-amber-300 py-4" onClick={handleClick}>Log out</button>
-                                </div>
-                                )}
+                            <div className="flex flex-col justify-center space-y-1 text-right ml-auto font-atkin">
+                                <p className="text-sm text-amber-300">Level {user.level} — {user.xp} XP</p>
+                                <p className="text-xs text-gray-400">{user.email}</p>
+                                <button
+                                    className="text-red-400 hover:text-red-600 text-sm transition"
+                                    onClick={handleClick}
+                                >
+                                    Log out
+                                </button>
+                            </div>
+                            )}
                     </ul>
                     <div className="lg:hidden md:flex flex-col justify-end">
                         <button onClick={toggleNavbar}>

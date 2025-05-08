@@ -1,8 +1,8 @@
-import { createContext, useReducer, useEffect } from "react";
+import { createContext, useReducer, useEffect, useState } from "react";
 
-export const AuthContext = createContext()
+const AuthContext = createContext()
 
-export const authReducer = (state, action) => {
+const authReducer = (state, action) => {
     switch (action.type) {
         case 'LOGIN':
             return {user: action.payload}
@@ -14,18 +14,28 @@ export const authReducer = (state, action) => {
                 user: action.payload
             }
         case 'UPDATE_USER_XP':
-            return { user:
-                { ...state.user, xp: action.payload.xp, level: action.payload.level } }
-        default:
-            return state
+            if (!action.payload || !action.payload.xp || !action.payload.level) {
+                console.error("Invalid payload for UPDATE_USER_XP", action.payload);
+                return state;
+            }
+            return {
+                user: {
+                    ...state.user,
+                    xp: action.payload.xp,
+                    level: action.payload.level,
+                    token: action.payload.token || state.user.token
+                }
+            }
     }
 }
 
 
-export const AuthContextProvider = ({ children }) => {
+const AuthContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, {
         user: null
     })
+    
+    const [authIsReady, setAuthIsReady] = useState(false);
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'))
@@ -33,15 +43,17 @@ export const AuthContextProvider = ({ children }) => {
         if (user) {
             dispatch ({type: 'LOGIN', payload: user})
         }
+        setAuthIsReady(true);
+
     }, [])
 
     console.log('Authcontext State : ', state)
 
     return(
-        <AuthContext.Provider value = {{...state, dispatch}}>
+        <AuthContext.Provider value = {{...state, dispatch, authIsReady}}>
             {children}
         </AuthContext.Provider>
     )
 }
 
-export default AuthContext; AuthContextProvider; authReducer
+export { AuthContextProvider, AuthContext, authReducer }

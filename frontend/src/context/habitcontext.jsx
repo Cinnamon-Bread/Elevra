@@ -14,6 +14,13 @@ export const habitsReducer = (state, action) => {
             return {
                 habits: [action.payload, ...state.habits]
             }
+        case 'UPDATE_HABIT':
+            return {
+                ...state,
+                habits: state.habits.map(habit =>
+                    habit._id === action.payload._id ? { ...habit, ...action.payload } : habit
+                ),
+            };
         case 'DELETE_HABIT':
             return{
                 habits: state.habits.filter((w) => w._id !== action.payload._id)
@@ -22,6 +29,15 @@ export const habitsReducer = (state, action) => {
             return{
                 habits: state.habits.filter((w) => w._id !== action.payload._id)
             }
+        case 'UPDATE_USER_XP':  // This will handle updating the user's XP and level
+            return { 
+                ...state, 
+                user: { 
+                    ...state.user, 
+                    xp: action.payload.xp, 
+                    level: action.payload.level 
+                }
+            };
         default:
             return state
     }

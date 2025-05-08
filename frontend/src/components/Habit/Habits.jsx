@@ -12,6 +12,11 @@ export const Habits = () => {
 
   useEffect(() => {
     const fetchHabit = async () =>{
+      if (!user || !user.token) {
+        console.warn("No user or token found")
+        return
+      }
+
       const response = await fetch('/api/habits', {
         headers:{
           'Authorization' : `Bearer ${user.token}`
@@ -25,6 +30,7 @@ export const Habits = () => {
     }
     if (user) {
       fetchHabit()
+
     }
 
   }, [dispatch, user])

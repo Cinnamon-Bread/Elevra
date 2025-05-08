@@ -6,7 +6,7 @@ import useAuthContext from '../../Hooks/useAuthContext'
 
 export const HabitDetails = ({ habit }) => {
   const {dispatch} = useHabitContext()
-  const {user} = useAuthContext()
+  const {user, dispatch : authDispatch} = useAuthContext()
   
   const handleDelete = async ( ) =>{
 
@@ -29,9 +29,14 @@ export const HabitDetails = ({ habit }) => {
   }
 
   const handleComplete = async () => {
-    if (!user) return
+    if (!user || !user.token) {
+      console.error("User not logged in.");
+      return;
+    }
   
     try {
+      console.log("Sending token:", user.token)
+
       const response = await fetch('/api/habits/complete/' + habit._id, {
         method: 'POST',
         headers: {
@@ -40,19 +45,27 @@ export const HabitDetails = ({ habit }) => {
       })
   
       const json = await response.json()
+      if (!response.ok) throw new Error(json.error || "Failed to complete habit");
   
       if (response.ok) {
-        dispatch({ type: 'UPDATE_USER_XP', payload: {xp: json.xp, level: json.level} })
-        alert(`Habit Completed! XP: ${json.xp}, Level: ${json.level}`)
+
+        authDispatch({ type: 'UPDATE_USER_XP', payload: { ...json.user, token: json.token } });
+        localStorage.setItem('user',JSON.stringify({...user,
+          xp: json.user.xp,level: json.user.level,token: json.token}))
+        
       } else {
         alert(json.error)
       }
   
+      alert('Habit completed!');
     } catch (err) {
       console.error(err)
       alert('Failed to complete habit')
     }
   }
+
+
+
 
   return (
     <div className="p-6 bg-zinc-800 shadow-lg rounded-lg border border-zinc-700 space-y-2">
